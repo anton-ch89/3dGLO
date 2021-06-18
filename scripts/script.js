@@ -57,20 +57,17 @@ window.addEventListener('DOMContentLoaded', function () {
             closeBtn = document.querySelector('.close-btn'),
             menuItems = menu.querySelectorAll('ul>li');
         let count = 0;
-        console.dir(menu);
         const handlerMenu = () => {
             //Анимация
             count++;
 
             let menuAnimation = requestAnimationFrame(handlerMenu);
             let width = document.documentElement.clientWidth;
-            if (count <= (width + 14) / 15 && width > 768) {
-                menu.style.left = count * 15 + 'px';
-            } else if (width < 768) {
-                menu.style.left = width + 'px';
+            if (count <= (width + 14) / 20 && width > 768) {
+                menu.style.left = count * 20 + 'px';
             } else {
+                menu.style.left = width + 'px';
                 cancelAnimationFrame(menuAnimation);
-
                 console.log(count);
             }
         };
@@ -107,4 +104,3 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     togglePopUp();
 });
-
