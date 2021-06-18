@@ -63,12 +63,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
             let menuAnimation = requestAnimationFrame(handlerMenu);
             let width = document.documentElement.clientWidth;
-            if (count <= (width + 14) / 20 && width > 768) {
-                menu.style.left = count * 20 + 'px';
+            if (count <= Math.sqrt(width)  && width > 768) {
+                menu.style.left = count ** 2 + 'px';
             } else {
                 menu.style.left = width + 'px';
                 cancelAnimationFrame(menuAnimation);
-                console.log(count);
             }
         };
         btnMenu.addEventListener('click', handlerMenu);
@@ -103,4 +102,22 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     };
     togglePopUp();
+
+    
+    //scroll 
+
+    const scrolElements = document.querySelectorAll('ul>li>a');
+
+scrolElements.forEach(e => {
+    e.addEventListener('click', (event) => {
+
+        event.preventDefault();
+
+        const id = e.getAttribute('href');
+        document.querySelector(id).scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+});
+
 });
