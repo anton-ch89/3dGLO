@@ -94,9 +94,11 @@ console.dir(menu);
 
             popup.style.display = 'block';
             popup.style.left = `-${popup.clientWidth}px`;
-            popupContent.style.left = `-${popupContent.clientWidth}px`;   
+            popupContent.style.left = `-${popupContent.clientWidth}px`;  
+
         let rect = popupContent.getBoundingClientRect();
         let count = 0;
+
 console.dir(popupContent);
 console.log(rect);
 
@@ -106,7 +108,8 @@ console.log(rect);
             let popupAnimation = requestAnimationFrame(handlerPopup);
             let width = document.documentElement.clientWidth;
             if (count <= (width) && width > 768) {
-                popup.style.left = count  - popup.clientWidth + 'px';
+                console.log(count);
+                popup.style.left = count - popup.clientWidth + 'px';
                 popupContent.style.left = rect.x + count  - popupContent.clientWidth + 'px';
             } else {
                 popup.style.left = width + 'px';
@@ -122,6 +125,8 @@ console.log(rect);
             });
             popupClose.addEventListener('click', () => {
                 // handlerPopup();
+                //  popup.style.display = 'none';
+
             });
         });
     };
