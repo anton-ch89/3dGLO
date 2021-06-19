@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function () {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li');
+            menuItems = menu.querySelectorAll('ul>li>a');
         let count = 0;
         const handlerMenu = () => {
             //Анимация
@@ -81,43 +81,88 @@ window.addEventListener('DOMContentLoaded', function () {
                 count = 0;
             });
         });
-
+console.dir(menu);
     };
     toggleMenu();
-
     //popup
 
     const togglePopUp = () => {
         const popup = document.querySelector('.popup'),
+            popupContent = document.querySelector('.popup-content'),
             popupBtns = document.querySelectorAll('.popup-btn'),
             popupClose = document.querySelector('.popup-close');
 
+            popup.style.display = 'block';
+            popup.style.left = `-${popup.clientWidth}px`;
+            popupContent.style.left = `-${popupContent.clientWidth}px`;   
+        let rect = popupContent.getBoundingClientRect();
+        let count = 0;
+console.dir(popupContent);
+console.log(rect);
+
+        const handlerPopup = () => {
+            //Анимация
+            count++;
+            let popupAnimation = requestAnimationFrame(handlerPopup);
+            let width = document.documentElement.clientWidth;
+            if (count <= (width) && width > 768) {
+                popup.style.left = count  - popup.clientWidth + 'px';
+                popupContent.style.left = rect.x + count  - popupContent.clientWidth + 'px';
+            } else {
+                popup.style.left = width + 'px';
+                popupContent.style.left =rect.x + width + 'px';
+                cancelAnimationFrame(popupAnimation);
+            }
+        };
+
         popupBtns.forEach(e => {
             e.addEventListener('click', () => {
-                popup.style.display = 'block';
+                // popup.style.display = 'block';
+                handlerPopup();
             });
             popupClose.addEventListener('click', () => {
-                popup.style.display = 'none';
+                // handlerPopup();
             });
         });
     };
     togglePopUp();
 
-    
+    // const handlerPopup = () => {
+    //     //Анимация
+    //     count++;
+    //     let popupAnimation = requestAnimationFrame(handlerPopup);
+    //     let width = document.documentElement.clientWidth;
+    //     if (count <= Math.sqrt(width) && width > 768) {
+    //         popup.style.left = count ** 2 + 'px';
+    //         popupContent.style.left = rect.x + count ** 2  + 'px';
+    //     } else {
+    //         popup.style.left = width + 'px';
+    //         popupContent.style.left =rect.x + width + 'px';
+    //         cancelAnimationFrame(popupAnimation);
+    //     }
+    // };
+
+
+
+
+
     //scroll 
-
-    const scrolElements = document.querySelectorAll('ul>li>a');
-
-scrolElements.forEach(e => {
-    e.addEventListener('click', (event) => {
-
-        event.preventDefault();
-
-        const id = e.getAttribute('href');
-        document.querySelector(id).scrollIntoView({
-            behavior: "smooth"
+const scroll = () => {
+    const scrolElements = document.querySelectorAll('ul>li>a'),
+    scrolElem = document.querySelector('main>a');
+    const scrolling = (elem) => {
+        elem.addEventListener('click', (event) => {
+            event.preventDefault();
+            const id = elem.getAttribute('href');
+            document.querySelector(id).scrollIntoView({
+                behavior: "smooth"
+            });
         });
-    });
+    };
+scrolElements.forEach(e => {
+    scrolling(e);
 });
-
+scrolling(scrolElem);
+};
+scroll();
 });
