@@ -47,95 +47,112 @@ window.addEventListener('DOMContentLoaded', function () {
         };
         let interval = setInterval(updateClock, 1000);
     };
-    countTimer('18 june 2021 10:08:30');
+    countTimer('28 june 2021 10:08:30');
 
     //  Меню
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
-            closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li>a');
+            menuItems = menu.querySelectorAll('ul>li>a'),
+            body = document.querySelector('body');
         let count = 0;
         const handlerMenu = () => {
             //Анимация
-            count++;
+            count += 40;
 
             let menuAnimation = requestAnimationFrame(handlerMenu);
             let width = document.documentElement.clientWidth;
-            if (count <= Math.sqrt(width) && width > 768) {
-                menu.style.left = count ** 2 + 'px';
+            if (count <= width && width > 768) {
+                menu.style.left = count + 'px';
             } else {
                 menu.style.left = width + 'px';
                 cancelAnimationFrame(menuAnimation);
             }
         };
         btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', () => {
-            menu.style.left = `-${menu.clientWidth}px`;
-            count = 0;
-        });
-        menuItems.forEach(e => {
-            e.addEventListener('click', () => {
+
+
+        body.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if (target.classList.contains('close-btn')) {
                 menu.style.left = `-${menu.clientWidth}px`;
                 count = 0;
-            });
+            }else if(target.closest('ul>li>a')) {
+                menu.style.left = `-${menu.clientWidth}px`;
+                count = 0;
+            }else{
+                target = target.closest('menu');
+                if (!target) {
+                    menu.style.left = `-${menu.clientWidth}px`;
+                    count = 0;
+                }
+            }
         });
     };
     toggleMenu();
 
     //popup
-    const togglePopUp = () => {
-        const popup = document.querySelector('.popup'),
-            popupContent = document.querySelector('.popup-content'),
-            popupBtns = document.querySelectorAll('.popup-btn'),
-            popupClose = document.querySelector('.popup-close');
 
-        popup.style.display = 'block';
-        popup.style.left = `-${popup.clientWidth}px`;
-        popupContent.style.left = `-${popupContent.clientWidth}px`;
+const togglePopUp = () => {
+    const popup = document.querySelector('.popup'),
+        popupContent = document.querySelector('.popup-content'),
+        popupBtns = document.querySelectorAll('.popup-btn');
 
-        let count = 0;
+    popup.style.display = 'block';
+    popup.style.left = `-${popup.clientWidth}px`;
+    popupContent.style.left = `-${popupContent.clientWidth}px`;
+
+    let count = 0;
 
 
-        const handlerPopup = () => {
-            //Анимация
-            count += 40;
-            let popupAnimation = requestAnimationFrame(handlerPopup);
-            let width = document.documentElement.clientWidth;
-            if (count <= (width / 2) && width > 768) {
-                popup.style.left = 0 + 'px';
-                popupContent.style.left = count - (popupContent.clientWidth / 2) + 50 + 'px';
-            } else {
-                popup.style.left = 0 + 'px';
-                popupContent.style.left = (width / 2) - (popupContent.clientWidth / 2) + 50 + 'px';
-                cancelAnimationFrame(popupAnimation);
-            }
-        };
-
-        const closePopup = () => {
-            //Анимация
-            count -= 10;
-            let popupAnimation = requestAnimationFrame(closePopup);
-            let width = document.documentElement.clientWidth;
-            if (count >= (-popupContent.clientWidth / 2) && width > 768) {
-                popupContent.style.left = count - (popupContent.clientWidth / 2) + 50 + 'px';
-                popup.style.left = `-${popup.clientWidth}px`;
-            } else {
-                popupContent.style.left = `-${popupContent.clientWidth}px`;
-                popup.style.left = `-${popup.clientWidth}px`;
-                cancelAnimationFrame(popupAnimation);
-            }
-        };
-        popupBtns.forEach(e => {
-            e.addEventListener('click', () => {
-                handlerPopup();
-            });
-            popupClose.addEventListener('click', () => {
-                closePopup();
-            });
-        });
+    const handlerPopup = () => {
+        //Анимация
+        count += 40;
+        let popupAnimation = requestAnimationFrame(handlerPopup);
+        let width = document.documentElement.clientWidth;
+        if (count <= (width / 2) && width > 768) {
+            popup.style.left = 0 + 'px';
+            popupContent.style.left = count - (popupContent.clientWidth / 2) + 50 + 'px';
+        } else {
+            popup.style.left = 0 + 'px';
+            popupContent.style.left = (width / 2) - (popupContent.clientWidth / 2) + 50 + 'px';
+            cancelAnimationFrame(popupAnimation);
+        }
     };
-    togglePopUp();
+
+    const closePopup = () => {
+        //Анимация
+        count -= 15;
+        let popupAnimation = requestAnimationFrame(closePopup);
+        let width = document.documentElement.clientWidth;
+        if (count >= (-popupContent.clientWidth / 2) && width > 768) {
+            popupContent.style.left = count - (popupContent.clientWidth / 2) + 50 + 'px';
+            popup.style.left = `-${popup.clientWidth}px`;
+        } else {
+            popupContent.style.left = `-${popupContent.clientWidth}px`;
+            popup.style.left = `-${popup.clientWidth}px`;
+            cancelAnimationFrame(popupAnimation);
+        }
+    };
+    popupBtns.forEach(e => {
+        e.addEventListener('click', () => {
+            handlerPopup();
+        });
+        popup.addEventListener('click', (event) => {
+            let target = event.target;
+            if(target.classList.contains('popup-close')){
+                closePopup();
+            }else{
+              target = target.closest('.popup-content');
+              if(!target){
+                closePopup();
+              } 
+            }
+        });
+    });
+};
+togglePopUp();
 
     //scroll 
     const scroll = () => {
@@ -156,4 +173,38 @@ window.addEventListener('DOMContentLoaded', function () {
         scrolling(scrolElem);
     };
     scroll();
+
+    //tabs
+
+    const tabs = () => {
+        const tabHeaeder = document.querySelector('.service-header'),
+            tabs = tabHeaeder.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+    
+            const toggleTabsContent = (index) => {
+                for(let i = 0; i < tabContent.length; i++){
+                    if(index === i){
+                        tabs[i].classList.add('active');
+                        tabContent[i].classList.remove('d-none');
+                    }else {
+                        tabs[i].classList.remove('active');
+                        tabContent[i].classList.add('d-none');
+                    }
+                }
+            };
+            tabHeaeder.addEventListener('click', (event) => {
+                let target = event.target;
+                target = target.closest('.service-header-tab');
+                if(target){
+                    tabs.forEach((item, i) => {
+                        if(item === target){
+                            toggleTabsContent(i);
+                        }
+                    });
+                }
+            });
+    };
+    
+    tabs();
+    
     });
