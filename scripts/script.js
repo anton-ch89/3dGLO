@@ -212,13 +212,13 @@ const slider = ()=>{
 
     const addDots = ()=>{
         dotsUl.insertAdjacentHTML('afterbegin', `<li class="dot dot-active"></li>`);
-        for (let i = 0; i < slide.length-1; i++){
+        for (let i = 0; i < slide.length - 1; i++){
          dotsUl.insertAdjacentHTML('beforeend', '<li class="dot"></li>');
         }
     };
     addDots();
-    
-    const  dot = document.querySelectorAll('.dot');
+
+    const dot = document.querySelectorAll('.dot');
     let currentSlide = 0,
     interval;
 
@@ -264,6 +264,9 @@ const slider = ()=>{
             dot.forEach((elem, index) => {
                 if(elem === target){
                     currentSlide = index;
+                    console.log(elem);
+                    console.log(index);
+                    console.log(currentSlide);
                 }
             });
         }
@@ -288,7 +291,7 @@ const slider = ()=>{
             startSlide();
         }
     });
-    startSlide(1000);
+    startSlide(3000);
 
 };  
 slider();  
