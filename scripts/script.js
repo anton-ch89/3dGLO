@@ -219,6 +219,7 @@ window.addEventListener('DOMContentLoaded', function () {
         addDots();
 
         const dot = document.querySelectorAll('.dot');
+
         let currentSlide = 0,
             interval;
 
@@ -229,7 +230,6 @@ window.addEventListener('DOMContentLoaded', function () {
         const nextSlide = (elem, index, strSlide) => {
             elem[index].classList.add(strSlide);
         };
-
         const autoPlaySlide = () => {
             prevSlide(slide, currentSlide, 'portfolio-item-active');
             prevSlide(dot, currentSlide, 'dot-active');
@@ -246,7 +246,6 @@ window.addEventListener('DOMContentLoaded', function () {
         const stopSlide = () => {
             clearInterval(interval);
         };
-
         slider.addEventListener('click', (event) => {
             event.preventDefault();
             let target = event.target;
@@ -264,16 +263,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 dot.forEach((elem, index) => {
                     if (elem === target) {
                         currentSlide = index;
-                        console.log(elem);
-                        console.log(index);
-                        console.log(currentSlide);
                     }
                 });
             }
             if (currentSlide >= slide.length) {
                 currentSlide = 0;
             }
-            if (currentSlide <= slide.length) {
+            if (currentSlide < 0) {
                 currentSlide = slide.length - 1;
             }
             nextSlide(slide, currentSlide, 'portfolio-item-active');
@@ -292,7 +288,6 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         });
         startSlide(3000);
-
     };
     slider();
 
