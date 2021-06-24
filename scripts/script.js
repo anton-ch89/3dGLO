@@ -291,4 +291,84 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     slider();
 
+    //Смена фото Наша команда
+    const changePhoto = () => {
+        const photos = document.querySelectorAll('.command__photo');
+        photos.forEach((item) =>{
+            item.addEventListener('mouseenter', event=>{
+                event.target.src = event.target.dataset.img;
+            });
+        });
+    };
+    changePhoto();
+
+    //Валидация калькулятора
+
+    const calcValidation =() =>{
+        const inputs = document.querySelectorAll('input.calc-item');
+        inputs.forEach(item=>{
+            item.addEventListener('input', ()=>{
+                item.value = item.value.replace(/\D/g, '');
+            });
+        });
+
+
+    };
+    calcValidation();
+
+    //Валидация формы обратной связи
+
+    const formValidation = () => {
+        const formName = document.querySelectorAll('#form1-name, #form2-name, #form3-name'),
+            formEmail = document.querySelectorAll('#form1-email, #form2-email, #form3-email'),
+            formPhone = document.querySelectorAll('#form1-phone, #form2-phone, #form3-phone'),
+            formMessage = document.querySelector('#form2-message');
+
+
+        formName.forEach(item => {
+            item.addEventListener('input', () => {
+                item.value = item.value.replace(/[^а-я\s-]/i, '');
+                item.addEventListener('blur', ()=>{
+                    item.value = item.value.replace(/[^а-я\s-]/gi, '');
+                    item.value = item.value.replace(/^[ \s]+|[ \s]+$/g, '');
+                    item.value = item.value.replace(/^[-]+|[-]+$/g, '');
+                    item.value = item.value.replace(/\s+/g, ' '); 
+                    // хотел сделать так, но критует при дефисе внутри фразы
+                    item.value = item.value.split(' ').map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" ");
+                });
+            });
+        });
+        formEmail.forEach(item => {
+            item.addEventListener('input', () => {
+                item.value = item.value.replace(/[^a-z@-_.!`*']/i, '');
+                item.addEventListener('blur', ()=>{
+                    item.value = item.value.replace(/[^a-z@-_.!`*']/gi, '');
+                    item.value = item.value.replace(/^[ \s]+|[ \s]+$/g, '');
+                    item.value = item.value.replace(/^[-]+|[-]+$/g, '');
+                    item.value = item.value.replace(/\s+/g, ' '); 
+                });
+            });
+        });
+        formPhone.forEach(item => {
+            item.addEventListener('input', () => {
+                item.value = item.value.replace(/[^0-9()-]/, '');
+                item.addEventListener('blur', ()=>{
+                    item.value = item.value.replace(/[^0-9()-]/g, '');
+                });
+            });
+        });
+
+        formMessage.addEventListener('input', () => {
+            formMessage.value = formMessage.value.replace(/[^а-я\s-]/i, '');
+            formMessage.addEventListener('blur', ()=>{
+                formMessage.value = formMessage.value.replace(/[^а-я\s-]/gi, '');
+                formMessage.value = formMessage.value.replace(/^[ \s]+|[ \s]+$/g, '');
+                formMessage.value = formMessage.value.replace(/^[-]+|[-]+$/g, '');
+                formMessage.value = formMessage.value.replace(/\s+/g, ' '); 
+            });
+        });
+    };
+    formValidation();
+
+
     });
