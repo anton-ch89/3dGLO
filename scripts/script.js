@@ -333,8 +333,8 @@ window.addEventListener('DOMContentLoaded', function () {
                     item.value = item.value.replace(/^[ \s]+|[ \s]+$/g, '');
                     item.value = item.value.replace(/^[-]+|[-]+$/g, '');
                     item.value = item.value.replace(/\s+/g, ' '); 
-                    // хотел сделать так, но критует при дефисе внутри фразы
-                    item.value = item.value.split(' ').map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" ");
+                    item.value = item.value.split(' ').map(item => 
+                        item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" ");
                 });
             });
         });
