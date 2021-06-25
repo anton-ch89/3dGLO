@@ -345,9 +345,9 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         formEmail.forEach(item => {
             item.addEventListener('input', () => {
-                item.value = item.value.replace(/[^a-z@_.!`*-~']/i, '');
+                item.value = item.value.replace(/[^a-z@_.!`*-~']|[0-9]/ig, '');
                 item.addEventListener('blur', () => {
-                    item.value = item.value.replace(/[^a-z@-_.!`*']/gi, '')
+                    item.value = item.value.replace(/[^a-z@_.!`*-~']|[0-9]/gi, '')
                         .replace(/^[ \s]+|[ \s]+$/g, '')
                         .replace(/^[-]+|[-]+$/g, '')
                         .replace(/\s+/g, ' ')
