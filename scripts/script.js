@@ -347,11 +347,10 @@ window.addEventListener('DOMContentLoaded', function () {
             item.addEventListener('input', () => {
                 item.value = item.value.replace(/[^a-z@_.!`*-~']/i, '');
                 item.addEventListener('blur', () => {
-                    item.value = item.value.replace(/[^a-z@-_.!`*']/gi, '')
+                    item.value = item.value.replace(/[^a-z@_.!`*-~']/gi, '')
                         .replace(/^[ \s]+|[ \s]+$/g, '')
                         .replace(/^[-]+|[-]+$/g, '')
-                        .replace(/\s+/g, ' ')
-                        .replace(/-+/g, '-');
+                        .replace(/\s+/g, ' ');
                 });
             });
         });
