@@ -294,8 +294,8 @@ window.addEventListener('DOMContentLoaded', function () {
     //Смена фото Наша команда
     const changePhoto = () => {
         const photos = document.querySelectorAll('.command__photo');
-        photos.forEach((item) =>{
-            item.addEventListener('mouseenter', event=>{
+        photos.forEach((item) => {
+            item.addEventListener('mouseenter', event => {
                 event.target.src = event.target.dataset.img;
             });
         });
@@ -304,10 +304,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
     //Валидация калькулятора
 
-    const calcValidation =() =>{
+    const calcValidation = () => {
         const inputs = document.querySelectorAll('input.calc-item');
-        inputs.forEach(item=>{
-            item.addEventListener('input', ()=>{
+        inputs.forEach(item => {
+            item.addEventListener('input', () => {
                 item.value = item.value.replace(/\D/g, '');
             });
         });
@@ -328,31 +328,37 @@ window.addEventListener('DOMContentLoaded', function () {
         formName.forEach(item => {
             item.addEventListener('input', () => {
                 item.value = item.value.replace(/[^а-я\s-]/i, '');
-                item.addEventListener('blur', ()=>{
-                    item.value = item.value.replace(/[^а-я\s-]/gi, '');
-                    item.value = item.value.replace(/^[ \s]+|[ \s]+$/g, '');
-                    item.value = item.value.replace(/^[-]+|[-]+$/g, '');
-                    item.value = item.value.replace(/\s+/g, ' '); 
-                    item.value = item.value.split(' ').map(item => 
-                        item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" ");
+                item.addEventListener('blur', () => {
+                    item.value = item.value.replace(/[^а-я\s-]/gi, '')
+                        .replace(/^[ \s]+|[ \s]+$/g, '')
+                        .replace(/^[-]+|[-]+$/g, '')
+                        .replace(/\s+/g, ' ')
+                        .replace(/-+/g, '-')
+                        .split(' ').map(item => {
+                            if (item) {
+                                return item[0].toUpperCase() + item.slice(1).toLowerCase();
+                            }
+                        })
+                        .join(' ');
                 });
             });
         });
         formEmail.forEach(item => {
             item.addEventListener('input', () => {
-                item.value = item.value.replace(/[^a-z@-_.!`*']/i, '');
-                item.addEventListener('blur', ()=>{
-                    item.value = item.value.replace(/[^a-z@-_.!`*']/gi, '');
-                    item.value = item.value.replace(/^[ \s]+|[ \s]+$/g, '');
-                    item.value = item.value.replace(/^[-]+|[-]+$/g, '');
-                    item.value = item.value.replace(/\s+/g, ' '); 
+                item.value = item.value.replace(/[^a-z@_.!`*-~']/i, '');
+                item.addEventListener('blur', () => {
+                    item.value = item.value.replace(/[^a-z@-_.!`*']/gi, '')
+                        .replace(/^[ \s]+|[ \s]+$/g, '')
+                        .replace(/^[-]+|[-]+$/g, '')
+                        .replace(/\s+/g, ' ')
+                        .replace(/-+/g, '-');
                 });
             });
         });
         formPhone.forEach(item => {
             item.addEventListener('input', () => {
                 item.value = item.value.replace(/[^0-9()-]/, '');
-                item.addEventListener('blur', ()=>{
+                item.addEventListener('blur', () => {
                     item.value = item.value.replace(/[^0-9()-]/g, '');
                 });
             });
@@ -360,11 +366,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
         formMessage.addEventListener('input', () => {
             formMessage.value = formMessage.value.replace(/[^а-я\s-]/i, '');
-            formMessage.addEventListener('blur', ()=>{
-                formMessage.value = formMessage.value.replace(/[^а-я\s-]/gi, '');
-                formMessage.value = formMessage.value.replace(/^[ \s]+|[ \s]+$/g, '');
-                formMessage.value = formMessage.value.replace(/^[-]+|[-]+$/g, '');
-                formMessage.value = formMessage.value.replace(/\s+/g, ' '); 
+            formMessage.addEventListener('blur', () => {
+                formMessage.value = formMessage.value.replace(/[^а-я\s-]/gi, '')
+                    .replace(/^[ \s]+|[ \s]+$/g, '')
+                    .replace(/^[-]+|[-]+$/g, '')
+                    .replace(/\s+/g, ' ')
+                    .replace(/-+/g, '-');
             });
         });
     };
@@ -413,4 +420,4 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     calc(100);
 
-    });
+});
