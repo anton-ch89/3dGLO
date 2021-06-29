@@ -443,7 +443,6 @@ window.addEventListener('DOMContentLoaded', function () {
         //Первая форма
         form1.addEventListener('submit', (event) => {
             event.preventDefault();
-            form1.reset();
             form1.append(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(form1);
@@ -454,16 +453,18 @@ window.addEventListener('DOMContentLoaded', function () {
 
             postData(body, () => {
                 statusMessage.textContent = successMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);
             }, (error) => {
                 statusMessage.textContent = errorMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);
                 console.error(error);
             });
+            form1.reset();
         });
 
         //Вторая форма
         form2.addEventListener('submit', (event) => {
             event.preventDefault();
-            form2.reset();
             form2.insertAdjacentElement('afterend', statusMessage);
             statusMessage.textContent = loadMessage;
             const formData = new FormData(form2);
@@ -474,10 +475,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
             postData(body, () => {
                 statusMessage.textContent = successMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);
             }, (error) => {
                 statusMessage.textContent = errorMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);
                 console.error(error);
             });
+            form2.reset();
         });
 
 
@@ -485,7 +489,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
         form3.addEventListener('submit', (event) => {
             event.preventDefault();
-            form3.reset();
             statusMessage.style.cssText = `font-size: 2rem; color: #fff;`;
             form3.insertAdjacentElement('afterend', statusMessage);
             statusMessage.textContent = loadMessage;
@@ -493,14 +496,19 @@ window.addEventListener('DOMContentLoaded', function () {
             let body = {};
             formData.forEach((val, key) => {
                 body[key] = val;
+                console.log(body[key]);
+                console.log(val);
             });
 
             postData(body, () => {
                 statusMessage.textContent = successMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);
             }, (error) => {
                 statusMessage.textContent = errorMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);
                 console.error(error);
             });
+            form3.reset();
         });
 
         const postData = (body, outputData, errorData) => {
@@ -515,7 +523,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     errorData();
                 }
             });
-            request.open('POST', '../server.php');
+            request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(JSON.stringify(body));
         };
