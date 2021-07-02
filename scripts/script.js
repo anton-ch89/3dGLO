@@ -138,7 +138,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 let target = event.target;
                 if (target.classList.contains('popup-close')) {
                     closePopup();
-                } else {
+                }else {
                     target = target.closest('.popup-content');
                     if (!target) {
                         closePopup();
@@ -451,14 +451,14 @@ window.addEventListener('DOMContentLoaded', function () {
                 body[key] = val;
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
+            postData(body)
+            .then(()=>{ statusMessage.textContent = successMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);})
+                .catch((error)=>{
+                    statusMessage.textContent = errorMessage;
                 setTimeout(()=>{statusMessage.remove();}, 3000);
                 console.error(error);
-            });
+                });
             form1.reset();
         });
 
@@ -473,14 +473,14 @@ window.addEventListener('DOMContentLoaded', function () {
                 body[key] = val;
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
+            postData(body)
+            .then(()=>{ statusMessage.textContent = successMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);})
+                .catch((error)=>{
+                    statusMessage.textContent = errorMessage;
                 setTimeout(()=>{statusMessage.remove();}, 3000);
                 console.error(error);
-            });
+                });
             form2.reset();
         });
 
@@ -500,32 +500,35 @@ window.addEventListener('DOMContentLoaded', function () {
                 console.log(val);
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
+            postData(body)
+            .then(()=>{ statusMessage.textContent = successMessage;
+                setTimeout(()=>{statusMessage.remove();}, 3000);})
+                .catch((error)=>{
+                    statusMessage.textContent = errorMessage;
                 setTimeout(()=>{statusMessage.remove();}, 3000);
                 console.error(error);
-            });
+                });
             form3.reset();
         });
 
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
+        const postData = (body) => {
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
             request.addEventListener('readystatechange', () => {
                 if (request.readyState !== 4) {
                     return;
                 }
                 if (request.status === 200) {
-                    outputData();
+                    resolve(body);
                 } else {
-                    errorData();
+                    reject(request.statusText);
                 }
             });
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(JSON.stringify(body));
+            });
+            
         };
     };
     sendForm();
