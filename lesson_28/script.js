@@ -76,7 +76,7 @@ const sendData = (data) => {
                 reject(request.statusText);
             }
         });
-        request.open('POST', './server.hp');
+        request.open('POST', './server.php');
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify(data));
     });
