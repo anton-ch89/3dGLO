@@ -72,6 +72,7 @@ window.addEventListener('DOMContentLoaded', function () {
             let target = event.target;
 
             if (target.classList.contains('close-btn') || target.closest('ul>li>a')) {
+                event.preventDefault();
                 menu.style.left = `-${menu.clientWidth}px`;
                 count = 0;
             } else if (target.closest('.menu')) {
@@ -138,7 +139,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 let target = event.target;
                 if (target.classList.contains('popup-close')) {
                     closePopup();
-                }else {
+                } else {
                     target = target.closest('.popup-content');
                     if (!target) {
                         closePopup();
@@ -327,9 +328,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
         formName.forEach(item => {
             item.addEventListener('input', () => {
-                item.value = item.value.replace(/[^а-я\s]/i, '');
+                item.value = item.value.replace(/[^а-я\s]{2,}/i, '');
                 item.addEventListener('blur', () => {
-                    item.value = item.value.replace(/[^а-я\s]/gi, '')
+                    item.value = item.value.replace(/[^а-я\s]{2,}/gi, '')
                         .replace(/^[ \s]+|[ \s]+$/g, '')
                         .replace(/^[-]+|[-]+$/g, '')
                         .replace(/\s+/g, ' ')
@@ -357,9 +358,9 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         formPhone.forEach(item => {
             item.addEventListener('input', () => {
-                item.value = item.value.replace(/[^0-9\+]/, '');
+                item.value = item.value.replace(/[^0-9\+]{7,11}/, '');
                 item.addEventListener('blur', () => {
-                    item.value = item.value.replace(/[^0-9\+]/g, '');
+                    item.value = item.value.replace(/[^0-9\+]{7,11}/g, '');
                 });
             });
         });
@@ -386,7 +387,7 @@ window.addEventListener('DOMContentLoaded', function () {
             calcDay = document.querySelector('.calc-day'),
             calcCount = document.querySelector('.calc-count'),
             totalValue = document.querySelector('#total');
-            totalValue.innerHTML = 0;
+        totalValue.innerHTML = 0;
 
         const countSum = () => {
             let total = 0,
@@ -408,13 +409,13 @@ window.addEventListener('DOMContentLoaded', function () {
             if (typeValue && squareValue) {
                 total = price * typeValue * squareValue * countValue * dayValue;
             }
-            
-            
+
+
             totalValue.textContent = total;
         };
-          
 
-    
+
+
 
         calcBlock.addEventListener('change', (event) => {
             let target = event.target;
@@ -422,20 +423,19 @@ window.addEventListener('DOMContentLoaded', function () {
                 countSum();
             }
         });
-       
+
     };
     calc(100);
 
     //send ajax-form
-
     const sendForm = () => {
         const errorMessage = 'Что-то пошло не так',
             loadMessage = 'Загрузка...',
             successMessage = 'Спасибо! Мы скоро с Вами свяжемся';
 
         const form1 = document.querySelector('#form1'),
-         form2 = document.querySelector('#form2'),
-         form3 = document.querySelector('#form3');
+            form2 = document.querySelector('#form2'),
+            form3 = document.querySelector('#form3');
 
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = `font-size: 2rem;`;
@@ -452,12 +452,21 @@ window.addEventListener('DOMContentLoaded', function () {
             });
 
             postData(body)
-            .then(()=>{ statusMessage.textContent = successMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);})
-                .catch((error)=>{
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network is not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 3000);
+                })
+                .catch((error) => {
                     statusMessage.textContent = errorMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);
-                console.error(error);
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 3000);
+                    console.error(error);
                 });
             form1.reset();
         });
@@ -474,12 +483,21 @@ window.addEventListener('DOMContentLoaded', function () {
             });
 
             postData(body)
-            .then(()=>{ statusMessage.textContent = successMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);})
-                .catch((error)=>{
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network is not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 3000);
+                })
+                .catch((error) => {
                     statusMessage.textContent = errorMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);
-                console.error(error);
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 3000);
+                    console.error(error);
                 });
             form2.reset();
         });
@@ -496,41 +514,40 @@ window.addEventListener('DOMContentLoaded', function () {
             let body = {};
             formData.forEach((val, key) => {
                 body[key] = val;
-                console.log(body[key]);
-                console.log(val);
             });
 
             postData(body)
-            .then(()=>{ statusMessage.textContent = successMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);})
-                .catch((error)=>{
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network is not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                    setTimeout(() => {
+                        statusMessage.remove();
+                        togglePopUp();
+                    }, 2000);
+                })
+                .catch((error) => {
                     statusMessage.textContent = errorMessage;
-                setTimeout(()=>{statusMessage.remove();}, 3000);
-                console.error(error);
+                    setTimeout(() => {
+                        statusMessage.remove();
+                        togglePopUp();
+                    }, 3000);
+                    console.error(error);
                 });
             form3.reset();
         });
 
         const postData = (body) => {
-            return new Promise((resolve, reject) => {
-                const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-                if (request.status === 200) {
-                    resolve(body);
-                } else {
-                    reject(request.statusText);
-                }
+            return fetch('./server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
             });
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
-            });
-            
         };
     };
     sendForm();
 
-    });
+});
