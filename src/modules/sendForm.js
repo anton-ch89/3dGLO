@@ -4,7 +4,7 @@ import togglePopUp from './togglePopUp.js';
  //send ajax-form
  const sendForm = () => {
     const errorMessage = 'Что-то пошло не так',
-        loadMessage = 'Загрузка...',
+        loadMessage = '`<h2 class="animate">Loading</h2>`',
         successMessage = 'Спасибо! Мы скоро с Вами свяжемся';
 
     const form1 = document.querySelector('#form1'),
@@ -18,7 +18,7 @@ import togglePopUp from './togglePopUp.js';
     form1.addEventListener('submit', (event) => {
         event.preventDefault();
         form1.append(statusMessage);
-        statusMessage.textContent = loadMessage;
+        statusMessage.innerHTML = loadMessage;
         const formData = new FormData(form1);
         let body = {};
         formData.forEach((val, key) => {
@@ -49,7 +49,7 @@ import togglePopUp from './togglePopUp.js';
     form2.addEventListener('submit', (event) => {
         event.preventDefault();
         form2.insertAdjacentElement('afterend', statusMessage);
-        statusMessage.textContent = loadMessage;
+        statusMessage.innerHTML = loadMessage;
         const formData = new FormData(form2);
         let body = {};
         formData.forEach((val, key) => {
@@ -83,7 +83,7 @@ import togglePopUp from './togglePopUp.js';
         event.preventDefault();
         statusMessage.style.cssText = `font-size: 2rem; color: #fff;`;
         form3.insertAdjacentElement('afterend', statusMessage);
-        statusMessage.textContent = loadMessage;
+        statusMessage.innerHTML = loadMessage;
         const formData = new FormData(form3);
         let body = {};
         formData.forEach((val, key) => {
