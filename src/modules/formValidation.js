@@ -6,14 +6,13 @@ const formValidation = () => {
         formEmail = document.querySelectorAll('#form1-email, #form2-email, #form3-email'),
         formPhone = document.querySelectorAll('#form1-phone, #form2-phone, #form3-phone'),
         formMessage = document.querySelector('#form2-message');
-
+        formMessage.setAttribute('required', true);
 
     formName.forEach(item => {
-        console.log(item.value.length);
         item.addEventListener('input', () => {
             item.style.border = '';
             item.value = item.value.replace(/[^а-я\s]/i, '');
-            item.addEventListener('blur', (event) => {
+            item.addEventListener('blur', () => {
                 if (item.value.length > 1) {
                     item.value = item.value.replace(/[^а-я\s]/gi, '')
                         .replace(/^[ \s]+|[ \s]+$/g, '')
@@ -30,13 +29,16 @@ const formValidation = () => {
                     item.style.border = '2px solid red';
                     item.value = '';
                 }
+                
             });
         });
     });
     formEmail.forEach(item => {
+        item.setAttribute('required', true);
         item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^a-z@_.!`*-~']|[0-9]/ig, '');
-            item.addEventListener('blur', () => {
+            item.value = item.value.trim().replace(/[^a-z@_.!`*-~']|[0-9]/ig, '');
+            item.addEventListener('blur', (event) => {
+                item.type = 'text';
                 item.value = item.value.replace(/[^a-z@_.!`*-~']|[0-9]/gi, '')
                     .replace(/^[ \s]+|[ \s]+$/g, '')
                     .replace(/^[-]+|[-]+$/g, '')
@@ -61,6 +63,7 @@ const formValidation = () => {
     });
 
     formMessage.addEventListener('input', () => {
+       
         formMessage.value = formMessage.value.replace(/[^а-я\s-,:;!\?\.0-9]/i, '');
         formMessage.addEventListener('blur', () => {
             formMessage.value = formMessage.value.replace(/[^а-я\s-,:;!\?\.0-9]/gi, '')

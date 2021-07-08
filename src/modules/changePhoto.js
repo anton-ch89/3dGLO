@@ -1,10 +1,17 @@
     //Смена фото Наша команда
     const changePhoto = () => {
-        const photos = document.querySelectorAll('.command__photo');
-        photos.forEach((item) => {
-            item.addEventListener('mouseenter', event => {
-                event.target.src = event.target.dataset.img;
-            });
+        const img = document.querySelectorAll('.command__photo');
+
+        const changeImg = item => {
+            const src = item.src;
+    
+            item.src = item.dataset.img;
+            item.dataset.img = src;
+        };
+    
+        img.forEach(item => {
+            item.addEventListener('mouseover', () => changeImg(item));
+            item.addEventListener('mouseout', () => changeImg(item));
         });
     };
-export default changePhoto;
+    export default changePhoto;
