@@ -1,12 +1,16 @@
 // Валидация форм обратной связи
-
 const formValidation = () => {
 
     const formName = document.querySelectorAll('#form1-name, #form2-name, #form3-name'),
         formEmail = document.querySelectorAll('#form1-email, #form2-email, #form3-email'),
         formPhone = document.querySelectorAll('#form1-phone, #form2-phone, #form3-phone'),
-        formMessage = document.querySelector('#form2-message');
+        formMessage = document.querySelector('#form2-message'),
+        errorNameMessage = 'Имя должно быть не короче 2х букв.',
+        errorPhoneMessage = 'Номер телефона должен содержать от 7 до 11 символов.',
+        statusMessage = document.createElement('div');
         formMessage.setAttribute('required', true);
+        statusMessage.style.cssText = `font-size: 14px; color: red;`;
+
 
     formName.forEach(item => {
         item.addEventListener('input', () => {
@@ -14,6 +18,7 @@ const formValidation = () => {
             item.value = item.value.replace(/[^а-я\s]/i, '');
             item.addEventListener('blur', () => {
                 if (item.value.length > 1) {
+                    statusMessage.remove();
                     item.value = item.value.replace(/[^а-я\s]/gi, '')
                         .replace(/^[ \s]+|[ \s]+$/g, '')
                         .replace(/^[-]+|[-]+$/g, '')
@@ -28,8 +33,12 @@ const formValidation = () => {
                 } else {
                     item.style.border = '2px solid red';
                     item.value = '';
+                    statusMessage.textContent = errorNameMessage;
+                    item.insertAdjacentElement("afterend", statusMessage);
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 5000);        
                 }
-                
             });
         });
     });
@@ -52,11 +61,17 @@ const formValidation = () => {
             item.value = item.value.replace(/[^0-9\+]/, '');
             item.addEventListener('blur', () => {
                 if (item.value.length >= 7 && item.value.length <= 11) {
+                    statusMessage.remove();
                     item.value = item.value.replace(/[^0-9\+]/g, '');
                     item.style.border = '';
                 } else {
                     item.style.border = '2px solid red';
                     item.value = '';
+                    statusMessage.textContent = errorPhoneMessage;
+                    item.insertAdjacentElement("afterend", statusMessage);
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 5000);        
                 }
             });
         });
