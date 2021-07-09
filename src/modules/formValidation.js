@@ -60,7 +60,7 @@ const formValidation = () => {
         item.addEventListener('input', () => {
             item.value = item.value.replace(/[^0-9\+]/, '');
             item.addEventListener('blur', () => {
-                const pattern = /\+?[0-9]{7,11}/;
+                const pattern = /^\+?[0-9]{7,11}$/;
                 if (pattern.test(item.value)) {
                     statusMessage.remove();
                     item.value = item.value.replace(/[^0-9\+]/g, '');
