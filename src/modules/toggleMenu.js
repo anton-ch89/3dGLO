@@ -5,7 +5,7 @@
         let count = 0;
         const handlerMenu = () => {
             //Анимация
-            count += 40;
+            count += 30;
 
             let menuAnimation = requestAnimationFrame(handlerMenu);
             let width = document.documentElement.clientWidth;

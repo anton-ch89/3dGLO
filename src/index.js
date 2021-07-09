@@ -14,7 +14,7 @@ import sendForm from './modules/sendForm.js';
 import sliderCarusel from './modules/sliderCarusel';
 
 //  Таймер
-countTimer('28 june 2021 10:08:30');
+countTimer('11 jule 2021 10:08:30');
 //  Меню
 toggleMenu();
 //popup
