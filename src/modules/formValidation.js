@@ -6,7 +6,7 @@ const formValidation = () => {
         formPhone = document.querySelectorAll('#form1-phone, #form2-phone, #form3-phone'),
         formMessage = document.querySelector('#form2-message'),
         errorNameMessage = 'Имя должно быть не короче 2х букв.',
-        errorPhoneMessage = 'Номер телефона должен содержать от 7 до 11 символов.',
+        errorPhoneMessage = 'Номер телефона должен содержать от 7 до 11 цифр.',
         statusMessage = document.createElement('div');
     formMessage.setAttribute('required', true);
     statusMessage.style.cssText = `font-size: 12px; color: red;`;
