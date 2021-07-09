@@ -8,8 +8,8 @@ const formValidation = () => {
         errorNameMessage = 'Имя должно быть не короче 2х букв.',
         errorPhoneMessage = 'Номер телефона должен содержать от 7 до 11 цифр.',
         statusMessage = document.createElement('div');
-    formMessage.setAttribute('required', true);
-    statusMessage.style.cssText = `font-size: 12px; color: red;`;
+        formMessage.setAttribute('required', true);
+        statusMessage.style.cssText = `font-size: 12px; line-height: 2; color: red;`;
 
 
     formName.forEach(item => {
